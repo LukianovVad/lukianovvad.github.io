@@ -1,0 +1,25 @@
+<div class="main__pagination">
+    <div class="main__pagination-items" data-bind="css: { test: totalPages().length > 3, disable: totalPages().length === 0 }">
+        <span class="main__pagination-item" 
+              data-bind="click: firstPage, css: { disable: $parent.currentPage() === 1 }">
+            <<
+        </span>
+        <span class="main__pagination-item"
+              data-bind="click: prevPage, css: { disable: $parent.currentPage() === 1 }">
+            <
+        </span>
+        <span class="main__pagination-item--wrapper" data-bind="foreach: test">
+            <span class="main__pagination-numbers" 
+                  data-bind="text: $data, click: $parent.selectPage, css: { active: $data === $parent.currentPage() }">
+            </span>
+        </span>
+        <span class="main__pagination-item"
+              data-bind="click: nextPage, , css: { disable: $parent.currentPage() === totalPages().length }">
+            >
+        </span>
+        <span class="main__pagination-item"
+              data-bind="click: lastPage, , css: { disable: $parent.currentPage() === totalPages().length }">
+            >>
+        </span>
+    </div>
+</div>

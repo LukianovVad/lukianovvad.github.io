@@ -1,0 +1,16 @@
+<div class="main__products">
+    <div class="main__products-inner" data-bind="foreach: productGrid">
+        <div class="main__product">
+            <a class="main__product-link" href="#">
+                <div class="main__product-image-wrapper">
+                    <img class="main__product-image" data-bind="attr: { src: $parent.checkUrlImage(images[0]) }" src="">
+                </div>
+                <div class="main__product-content">
+                    <div class="main__product-name" data-bind="text: short_description"></div>
+                    <div class="main__product-price" data-bind="text: price"></div>
+                    <div class="main__product-descr" data-bind="text: name"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

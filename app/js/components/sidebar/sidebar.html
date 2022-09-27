@@ -1,0 +1,35 @@
+<div class="main__">
+    <button data-bind="click: test">test</button>
+    <div class="main__sidebar-block">
+        <h3 class="main__sidebar-title">Color</h3>
+        <ul class="main__sidebar-list" data-bind="foreach: colorArray">
+            <li class="main__sidebar-item">
+                <label>
+                    <input class="main__sidebar-item-link"
+                           type="checkbox"
+                           data-bind="checkedValue: value, checked: $parent.selectedOptions, enable: visible">
+                    <span data-bind="text: propertyName"></span>
+                </label>
+            </li>
+        </ul>
+    </div>
+    <div class="main__sidebar-block">
+        <h3 class="main__sidebar-title">Size</h3>
+        <ul class="main__sidebar-list" data-bind="foreach: sizeArray">
+            <li class="main__sidebar-item">
+                <label>
+                    <input class="main__sidebar-item-link"
+                           type="checkbox"
+                           data-bind="checkedValue: value, checked: $parent.selectedOptions, enable: visible">
+                    <span data-bind="text: propertyName"></span>
+                </label>
+            </li>
+        </ul>
+    </div>
+    <div class="main__sidebar-block">
+        <h3 class="main__sidebar-title">Price</h3>
+        <div class="slidecontainer">
+            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        </div>
+    </div>
+</div>
