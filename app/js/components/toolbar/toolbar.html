@@ -1,14 +1,16 @@
-<div class="main__toolbar">
-    <select data-bind="value: sortValue, click: sortLogic">
+<div class="products__holder">
+    <button class="products__toolbar-btn" data-bind="click: toggleSidebar, clickBubble: false">Filter</button>
+</div>
+<div class="products__holder">
+    <select class="products__select" data-bind="value: sortValue">
         <option value="">...chose</option>
-        <option value="fromCheapToExpensive">от дешовых к дорогим</option>
-        <option value="fromExpensiveToCheap">от дорогих к дешовым</option>
+        <option value="fromCheapToExpensive">From cheap to expensive</option>
+        <option value="fromExpensiveToCheap">From expensive to cheap</option>
     </select>
-    <select class="main__toolbar-select" data-bind="value: pageSizeValue, click: selectPageSize">
+    <select class="products__select" data-bind="value: pageSizeValue">
         <option value="8">8</option>
         <option value="16">16</option>
         <option value="24">24</option>
-        <option value="48">48</option>
     </select>
-    <span>количиство товаров всего: <span data-bind="text: data_two().length"></span></span>
+    <span class="products__total-label">total: <span class="products__total" data-bind="text: products().length"></span></span>
 </div>

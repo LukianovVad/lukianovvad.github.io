@@ -1,12 +1,12 @@
-define([], function() {
+define([], () => {
     'use strict';
 
     return function ProductsViewModel(params) {
         const self = this;
 
-        self.productGrid = params.parent.productGrid;
+        self.productsGrid = params.parent.productsGrid;
 
-        self.checkUrlImage = function(str) {
+        self.getUrlImage = str => {
             return str === undefined ? '/images/placeholder.png' : str.url;
         };
     };

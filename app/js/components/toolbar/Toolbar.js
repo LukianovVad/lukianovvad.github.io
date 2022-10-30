@@ -1,49 +1,61 @@
-define(['ko'], function (ko) {
+define(['ko'], ko => {
     'use strict';
 
     return function ToolbarViewModel(params) {
         const self = this;
 
-        self.data_two = params.parent.data_two;
-
+        self.json = params.parent.json;
+        self.products = params.parent.products;
         self.pageSize = params.parent.pageSize;
-
         self.currentPage = params.parent.currentPage;
-
         self.sortValue = ko.observable();
-
         self.pageSizeValue = ko.observable();
 
-        self.selectPageSize = function() {
+        self.pageSizeValue.subscribe(newValue => {
             self.currentPage(1);
-            self.pageSize(+self.pageSizeValue());
-            console.log(self.pageSize());
-        };
+            self.pageSize(+newValue);
+        });
 
-        self.sortLogic = function() {
-            if (self.sortValue() === 'fromCheapToExpensive') {
-                console.log('fromCheapToExpensive');
-                console.log(self.data_two());
+        self.sortValue.subscribe(newValue => {
+            self.json = params.parent.json;
 
-                self.data_two.sort(function (a, b) {
+            if (self.json === null) return; 
+            self.sorting(newValue); 
+        });
+
+        self.sorting = value => {
+            switch (value) {
+            case null:
+                break;
+
+            case 'fromCheapToExpensive':
+                self.json.sort((a, b) => {
                     return a.price - b.price;
                 });
-            }
+                break;
 
-            if (self.sortValue() === 'fromExpensiveToCheap') {
-                console.log('fromExpensiveToCheap');
-                console.log(self.data_two());
-
-                self.data_two.sort(function (a, b) {
+            case 'fromExpensiveToCheap':
+                self.json.sort((a, b) => {
                     return b.price - a.price;
                 });
-            }
+                break;
 
-            if (self.sortValue() === '') {
-                self.data_two.sort(function (a, b) {
+            case '':
+                self.json.sort((a, b) => {
                     return a.entity_id - b.entity_id;
                 });
             }
+
+            self.products(self.json);
+        };
+
+        self.toggleSidebar = () => {
+            document.body.addEventListener('click', (e) => {
+                console.log('body');
+                e.stopPropagation();
+                document.querySelector('.products__sidebar').classList.remove('products__sidebar--active');
+            });
+            document.querySelector('.products__sidebar').classList.toggle('products__sidebar--active');
         };
     };
 });

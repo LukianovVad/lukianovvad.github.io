@@ -1,8 +1,7 @@
 define([
-    'jquery',
     'ko',
     'underscore'
-], function ($, ko, _) {
+], (ko, _) => {
     'use strict';
 
     /* 
@@ -13,40 +12,15 @@ define([
     return function SidebarViewModel(params) {
         const self = this;
 
-        self.data = params.parent.data;
-
-        self.data_two = params.parent.data_two;
-
+        self.json = params.parent.data;
+        self.products = params.parent.products;
         self.selectedOptions = ko.observableArray([]);
-
         self.array1 = ko.observableArray([]);
-
         self.array2 = ko.observableArray([]);
 
         self.ArrayConstructor = function (propertyName, value) {
             this.propertyName = propertyName;
             this.value = value;
-            this.visible = ko.computed(function () {
-                self.data = params.parent.data;
-
-                if (this.value.prop === 'color') {
-                    if (self.array2().length === 0) return true;
-                    
-                    for (const item of self.array2()) {
-                        if (item.color === this.value.value) return true;;
-                    }
-                }
-
-                if (this.value.prop === 'size') {
-                    if (self.array1().length === 0) return true;
-                    
-                    for (const item of self.array1()) {
-                        if (item.size === this.value.value) return true;
-                    }
-                }
-
-                return false;
-            }, this);
         };
 
         self.colorArray = ko.observableArray([
@@ -66,21 +40,23 @@ define([
             new self.ArrayConstructor('XL', { prop: 'size', value: '7' })
         ]);
 
-        self.selectedOptions.subscribe(function (newValue) {
-            self.data = params.parent.data;
+        self.selectedOptions.subscribe((newValue) => {
+            console.log(newValue);
+            self.json = params.parent.json;
             const sorted = newValue.sort((prop1, prop2) => prop1['prop'] > prop2['prop'] ? 1 : -1);
             let array1 = [];
             let array2 = [];
 
             sorted.forEach(item => {
+                console.log(self.json);
                 if (item.prop === 'color') {
-                    self.data.forEach(elem => {
+                    self.json.forEach(elem => {
                         if (elem.color === item.value) array1.push(elem);
                     });
                 }
 
                 if (item.prop === 'size') {
-                    self.data.forEach(elem => {
+                    self.json.forEach(elem => {
                         if (elem.size === item.value) array2.push(elem);
                     });
                 }
@@ -91,26 +67,20 @@ define([
             self.sorting();
         });
 
-        self.sorting = function () {
+        self.sorting = () => {
             if (self.array1().length === 0 && self.array2().length === 0) {
-                self.data = params.parent.data;
-                const aaaa = self.data.map(el => el);
+                self.json = params.parent.json;
+                console.log(self.json);
+                const aaaa = self.json.map(el => el);
 
-                self.data_two(aaaa);
+                self.products(aaaa);
             } else if (self.array1().length !== 0 && self.array2().length === 0) {
-                self.data_two(self.array1());
+                self.products(self.array1());
             } else if (self.array1().length === 0 && self.array2().length !== 0) {
-                self.data_two(self.array2());
+                self.products(self.array2());
             } else if (self.array1().length !== 0 && self.array2().length !== 0) {
-                self.data_two(_.intersection(self.array1(), self.array2()));
+                self.products(_.intersection(self.array1(), self.array2()));
             }
         };
-
-        self.test = function () {
-        };
-
-        self.data_two.subscribe(function(newValue) {
-            console.log(newValue);
-        });
     };
 });
