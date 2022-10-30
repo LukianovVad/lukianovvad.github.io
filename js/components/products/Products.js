@@ -1,0 +1,1 @@
+define([],()=>{"use strict";return function(r){this.productsGrid=r.parent.productsGrid,this.getUrlImage=r=>void 0===r?"/images/placeholder.png":r.url}});

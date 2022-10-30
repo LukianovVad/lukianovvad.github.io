@@ -1,0 +1,1 @@
+define([],()=>{"use strict";return function(){this.toggleMenu=()=>{document.querySelector(".header__nav-list").classList.toggle("header__nav-list--active")}}});

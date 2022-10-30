@@ -1,0 +1,23 @@
+<div class="products__holder" data-bind="css: { disable: totalPages().length === 0 }">
+    <span class="products__button" 
+          data-bind="click: firstPage, css: { 'products__button--hidden': $parent.currentPage() === 1 }">
+        <<
+    </span>
+    <span class="products__button"
+          data-bind="click: prevPage, css: { 'products__button--hidden': $parent.currentPage() === 1 }">
+        <
+    </span>
+    <span class="products__numbers" data-bind="foreach: paginated">
+        <span class="products__button" 
+              data-bind="text: $data, click: $parent.selectPage, css: { 'products__button--active': $data === $parent.currentPage() }">
+        </span>
+    </span>
+    <span class="products__button"
+          data-bind="click: nextPage, , css: { 'products__button--hidden': $parent.currentPage() === totalPages().length }">
+        >
+    </span>
+    <span class="products__button"
+          data-bind="click: lastPage, , css: { 'products__button--hidden': $parent.currentPage() === totalPages().length }">
+        >>
+    </span>
+</div>

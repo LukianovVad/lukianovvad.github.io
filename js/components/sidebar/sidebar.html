@@ -1,0 +1,28 @@
+<div class="products__filter">
+    <div class="products__heading">Color filter</div>
+    <div class="products__wrap" data-bind="foreach: colorArray">
+        <label class="products__filter-label">
+            <div class="products__filter-box">
+                <input class="products__filter-input hidden"
+                       type="checkbox"
+                       data-bind="checkedValue: checkBoxValue, checked: $parent.selectedOptions">
+                <span class="products__filter-checkbox" data-bind="style: { backgroundColor: propLabel }"></span>
+            </div>
+            <span class="products__filter-text" data-bind="text: propLabel"></span>
+        </label>
+    </div>
+</div>
+<div class="products__filter">
+    <div class="products__heading">Size filter</div>
+    <div class="products__wrap" data-bind="foreach: sizeArray">
+        <label class="products__filter-label">
+            <div class="products__filter-box">
+                <input class="products__filter-input hidden"
+                       type="checkbox"
+                       data-bind="checkedValue: checkBoxValue, checked: $parent.selectedOptions">
+                <span class="products__filter-checkbox"></span>
+            </div>
+            <span class="products__filters-text" data-bind="text: propLabel"></span>
+        </label>
+    </div>
+</div>
