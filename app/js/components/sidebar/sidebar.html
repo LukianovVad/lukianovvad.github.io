@@ -5,10 +5,10 @@
             <div class="products__filter-box">
                 <input class="products__filter-input hidden"
                        type="checkbox"
-                       data-bind="checkedValue: value, checked: $parent.selectedOptions">
-                <span class="products__filter-checkbox" data-bind="style: { backgroundColor: propertyName}"></span>
+                       data-bind="checkedValue: checkBoxValue, checked: $parent.selectedOptions">
+                <span class="products__filter-checkbox" data-bind="style: { backgroundColor: propLabel }"></span>
             </div>
-            <span class="products__filter-text" data-bind="text: propertyName"></span>
+            <span class="products__filter-text" data-bind="text: propLabel"></span>
         </label>
     </div>
 </div>
@@ -19,10 +19,10 @@
             <div class="products__filter-box">
                 <input class="products__filter-input hidden"
                        type="checkbox"
-                       data-bind="checkedValue: value, checked: $parent.selectedOptions">
+                       data-bind="checkedValue: checkBoxValue, checked: $parent.selectedOptions">
                 <span class="products__filter-checkbox"></span>
             </div>
-            <span class="products__filters-text" data-bind="text: propertyName"></span>
+            <span class="products__filters-text" data-bind="text: propLabel"></span>
         </label>
     </div>
 </div>

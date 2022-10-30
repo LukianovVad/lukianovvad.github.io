@@ -50,11 +50,6 @@ define(['ko'], ko => {
         };
 
         self.toggleSidebar = () => {
-            document.body.addEventListener('click', (e) => {
-                console.log('body');
-                e.stopPropagation();
-                document.querySelector('.products__sidebar').classList.remove('products__sidebar--active');
-            });
             document.querySelector('.products__sidebar').classList.toggle('products__sidebar--active');
         };
     };

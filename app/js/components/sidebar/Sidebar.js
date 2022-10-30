@@ -12,74 +12,70 @@ define([
     return function SidebarViewModel(params) {
         const self = this;
 
-        self.json = params.parent.data;
+        self.json = params.parent.json;
         self.products = params.parent.products;
+        self.currentPage = params.parent.currentPage;
         self.selectedOptions = ko.observableArray([]);
-        self.array1 = ko.observableArray([]);
-        self.array2 = ko.observableArray([]);
-
-        self.ArrayConstructor = function (propertyName, value) {
-            this.propertyName = propertyName;
-            this.value = value;
-        };
+        self.filteredProductsByColor = ko.observableArray([]);
+        self.filteredProductsBySize = ko.observableArray([]);
 
         self.colorArray = ko.observableArray([
-            new self.ArrayConstructor('green', { prop: 'color', value: '15' }),
-            new self.ArrayConstructor('red', { prop: 'color', value: '32' }),
-            new self.ArrayConstructor('blue', { prop: 'color', value: '33' }),
-            new self.ArrayConstructor('black', { prop: 'color', value: '74' }),
-            new self.ArrayConstructor('tomato', { prop: 'color', value: '37' }),
-            new self.ArrayConstructor('pink', { prop: 'color', value: '38' })
+            { propLabel: 'green', checkBoxValue: { propType: 'color', value: '15' }},
+            { propLabel: 'red', checkBoxValue: { propType: 'color', value: '32' }},
+            { propLabel: 'blue', checkBoxValue: { propType: 'color', value: '33' }},
+            { propLabel: 'black', checkBoxValue: { propType: 'color', value: '74' }},
+            { propLabel: 'tomato', checkBoxValue: { propType: 'color', value: '37' }},
+            { propLabel: 'pink',checkBoxValue: { propType: 'color', value: '38' }} 
         ]);
 
         self.sizeArray = ko.observableArray([
-            new self.ArrayConstructor('XS', { prop: 'size', value: '3' }),
-            new self.ArrayConstructor('SM', { prop: 'size', value: '4' }),
-            new self.ArrayConstructor('MD', { prop: 'size', value: '5' }),
-            new self.ArrayConstructor('LG', { prop: 'size', value: '6' }),
-            new self.ArrayConstructor('XL', { prop: 'size', value: '7' })
+            { propLabel: 'XS', checkBoxValue: { propType: 'size', value: '3' }},
+            { propLabel: 'SM', checkBoxValue: { propType: 'size', value: '4' }},
+            { propLabel: 'MD', checkBoxValue: { propType: 'size', value: '5' }},
+            { propLabel: 'LG', checkBoxValue: { propType: 'size', value: '6' }},
+            { propLabel: 'XL', checkBoxValue: { propType: 'size', value: '7' }}
         ]);
 
         self.selectedOptions.subscribe((newValue) => {
-            console.log(newValue);
+            const sorted = newValue.sort((prop1, prop2) => prop1['propType'] > prop2['propType'] ? 1 : -1);
             self.json = params.parent.json;
-            const sorted = newValue.sort((prop1, prop2) => prop1['prop'] > prop2['prop'] ? 1 : -1);
-            let array1 = [];
-            let array2 = [];
+            self.filteredProductsByColor([]);
+            self.filteredProductsBySize([]);
 
             sorted.forEach(item => {
-                console.log(self.json);
-                if (item.prop === 'color') {
+                if (item.propType === 'color') {
                     self.json.forEach(elem => {
-                        if (elem.color === item.value) array1.push(elem);
+                        if (elem.color === item.value) self.filteredProductsByColor.push(elem);
                     });
                 }
 
-                if (item.prop === 'size') {
+                if (item.propType === 'size') {
                     self.json.forEach(elem => {
-                        if (elem.size === item.value) array2.push(elem);
+                        if (elem.size === item.value) self.filteredProductsBySize.push(elem);
                     });
                 }
             });
 
-            self.array1(array1);
-            self.array2(array2);
-            self.sorting();
+            self.filtering(self.filteredProductsByColor, self.filteredProductsBySize);
         });
 
-        self.sorting = () => {
-            if (self.array1().length === 0 && self.array2().length === 0) {
-                self.json = params.parent.json;
-                console.log(self.json);
-                const aaaa = self.json.map(el => el);
-
-                self.products(aaaa);
-            } else if (self.array1().length !== 0 && self.array2().length === 0) {
-                self.products(self.array1());
-            } else if (self.array1().length === 0 && self.array2().length !== 0) {
-                self.products(self.array2());
-            } else if (self.array1().length !== 0 && self.array2().length !== 0) {
-                self.products(_.intersection(self.array1(), self.array2()));
+        self.filtering = (filteredProductsByColor, filteredProductsBySize) => {
+            self.currentPage(1);
+            
+            if (_.size(filteredProductsByColor()) === 0 && _.size(filteredProductsBySize()) === 0) {
+                self.products(params.parent.json.map(el => el))
+            } 
+            
+            if (_.size(filteredProductsByColor()) !== 0 &&  _.size(filteredProductsBySize()) === 0) {
+                self.products(filteredProductsByColor());
+            } 
+            
+            if (_.size(filteredProductsByColor()) === 0 && _.size(filteredProductsBySize()) !== 0) {
+                self.products(self.filteredProductsBySize());
+            } 
+            
+            if (_.size(filteredProductsByColor()) !== 0 && _.size(filteredProductsBySize()) !== 0) {
+                self.products(_.intersection(filteredProductsByColor(), filteredProductsBySize()));
             }
         };
     };
