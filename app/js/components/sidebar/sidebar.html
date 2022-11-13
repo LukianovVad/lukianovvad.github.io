@@ -1,28 +1,14 @@
-<div class="products__filter">
-    <div class="products__heading">Color filter</div>
-    <div class="products__wrap" data-bind="foreach: colorArray">
-        <label class="products__filter-label">
-            <div class="products__filter-box">
-                <input class="products__filter-input hidden"
-                       type="checkbox"
-                       data-bind="checkedValue: checkBoxValue, checked: $parent.selectedOptions">
-                <span class="products__filter-checkbox" data-bind="style: { backgroundColor: propLabel }"></span>
-            </div>
-            <span class="products__filter-text" data-bind="text: propLabel"></span>
-        </label>
-    </div>
-</div>
-<div class="products__filter">
-    <div class="products__heading">Size filter</div>
-    <div class="products__wrap" data-bind="foreach: sizeArray">
-        <label class="products__filter-label">
-            <div class="products__filter-box">
-                <input class="products__filter-input hidden"
-                       type="checkbox"
-                       data-bind="checkedValue: checkBoxValue, checked: $parent.selectedOptions">
-                <span class="products__filter-checkbox"></span>
-            </div>
-            <span class="products__filters-text" data-bind="text: propLabel"></span>
-        </label>
+<div class="" data-bind="foreach: filters">
+    <div class="products__filter">
+        <div class="products__heading" data-bind="text: label"></div>
+        <div class="products__wrap" data-bind="foreach: options">
+            <label class="products__filter-label">
+                <div class="products__filter-box" data-bind="click: $component.eventHendler">
+                    <span class="products__filter-checkbox" data-bind="css: { 'products__filter-checkbox--selected': isSelected() === true }"></span>
+                </div>
+                <span class="products__filter-text" data-bind="text: name"></span>
+                <span data-bind="text: count"></span>
+            </label>
+        </div>
     </div>
 </div>

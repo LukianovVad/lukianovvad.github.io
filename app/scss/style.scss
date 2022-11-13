@@ -145,17 +145,15 @@
         height: 16px;
         margin-right: 10px;
         width: 16px;
+
+        &--selected {
+            background-image: url(../images/icons/checkbox.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+        }
     }
 
     &__filter-input {
-        &:checked {
-            & + .products__filter-checkbox {
-                background-image: url(../images/icons/checkbox.svg);
-                background-position: center;
-                background-repeat: no-repeat;
-            }
-        }
-
         &:disabled {
             & + .products__filter-checkbox {
                 cursor: auto;

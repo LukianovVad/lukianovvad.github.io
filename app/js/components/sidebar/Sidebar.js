@@ -15,68 +15,237 @@ define([
         self.json = params.parent.json;
         self.products = params.parent.products;
         self.currentPage = params.parent.currentPage;
-        self.selectedOptions = ko.observableArray([]);
-        self.filteredProductsByColor = ko.observableArray([]);
-        self.filteredProductsBySize = ko.observableArray([]);
+        self.filteredProducts = ko.observable();
+        self.testArray = ko.observable();
+        self.state = ko.observable(null);
+        self.filters = ko.observableArray([
+            {
+                label: 'Color',
+                options: [
+                    {
+                        count: ko.computed(() => {
+                            if (self.state() === 'color') {
+                                self.json = params.parent.json;
+                                return self.json.filter((item) => item.color === '15').length;
+                            }
+                            return self.products().filter((item) => item.color === '15').length;
 
-        self.colorArray = ko.observableArray([
-            { propLabel: 'green', checkBoxValue: { propType: 'color', value: '15' }},
-            { propLabel: 'red', checkBoxValue: { propType: 'color', value: '32' }},
-            { propLabel: 'blue', checkBoxValue: { propType: 'color', value: '33' }},
-            { propLabel: 'black', checkBoxValue: { propType: 'color', value: '74' }},
-            { propLabel: 'tomato', checkBoxValue: { propType: 'color', value: '37' }},
-            { propLabel: 'pink',checkBoxValue: { propType: 'color', value: '38' }} 
+                        }),
+                        isSelected: ko.observable(false),
+                        key: 'color',
+                        name: 'green',
+                        value: '15'
+                    },
+                    {
+                        count: ko.computed(() => {
+                            if (self.state() === 'color') {
+                                self.json = params.parent.json;
+                                return self.json.filter((item) => item.color === '33').length;
+                            }
+                            return self.products().filter((item) => item.color === '33').length;
+                        }),
+                        isSelected: ko.observable(false),
+                        key: 'color',
+                        name: 'red',
+                        value: '33'
+                    },
+                    {
+                        count: ko.computed(() => {
+                            if (self.state() === 'color') {
+                                self.json = params.parent.json;
+                                return self.json.filter((item) => item.color === '32').length;
+                            }
+                            return self.products().filter((item) => item.color === '32').length;
+                        }),
+                        isSelected: ko.observable(false),
+                        key: 'color',
+                        name: 'black',
+                        value: '32'
+                    },
+                    {
+                        count: ko.computed(() => {
+                            if (self.state() === 'color') {
+                                self.json = params.parent.json;
+                                return self.json.filter((item) => item.color === '74').length;
+                            }
+                            return self.products().filter((item) => item.color === '74').length;
+                        }),
+                        isSelected: ko.observable(false),
+                        key: 'color',
+                        name: 'tomato',
+                        value: '74'
+                    },
+                    {
+                        count: ko.computed(() => {
+                            if (self.state() === 'color') {
+                                self.json = params.parent.json;
+                                return self.json.filter((item) => item.color === '37').length;
+                            }
+                            return self.products().filter((item) => item.color === '37').length;
+                        }),
+                        isSelected: ko.observable(false),
+                        key: 'color',
+                        name: 'gray',
+                        value: '37'
+                    },
+                    {
+                        count: ko.computed(() => {
+                            if (self.state() === 'color') {
+                                self.json = params.parent.json;
+                                return self.json.filter((item) => item.color === '38').length;
+                            }
+                            return self.products().filter((item) => item.color === '38').length;
+                        }),
+                        isSelected: ko.observable(false),
+                        key: 'color',
+                        name: 'pink',
+                        value: '38'
+                    }
+                ]
+            },
+            {
+                label: 'Size',
+                options: [
+                    {
+                        count: ko.computed(() => {
+                            if (self.state() === 'size') {
+                                self.json = params.parent.json;
+                                return self.json.filter((item) => item.size === '3').length;
+                            }
+                            return self.products().filter((item) => item.size === '3').length;
+                        }),
+                        isSelected: ko.observable(false),
+                        key: 'size',
+                        name: 'XS',
+                        value: '3'
+                    },
+                    {
+                        count: ko.computed(() => {
+                            if (self.state() === 'size') {
+                                self.json = params.parent.json;
+                                return self.json.filter((item) => item.size === '4').length;
+                            }
+                            return self.products().filter((item) => item.size === '4').length;
+                        }),
+                        isSelected: ko.observable(false),
+                        key: 'size',
+                        name: 'Xl',
+                        value: '4'
+                    },
+                    {
+                        count: ko.computed(() => {
+                            if (self.state() === 'size') {
+                                self.json = params.parent.json;
+                                return self.json.filter((item) => item.size === '5').length;
+                            }
+                            return self.products().filter((item) => item.size === '5').length;
+                        }),
+                        isSelected: ko.observable(false),
+                        key: 'size',
+                        name: 'XXl',
+                        value: '5'
+                    },
+                    {
+                        count: ko.computed(() => {
+                            if (self.state() === 'size') {
+                                self.json = params.parent.json;
+                                return self.json.filter((item) => item.size === '6').length;
+                            }
+                            return self.products().filter((item) => item.size === '6').length;
+                        }),
+                        isSelected: ko.observable(false),
+                        key: 'size',
+                        name: 'XXS',
+                        value: '6'
+                    },
+                    {
+                        count: ko.computed(() => {
+                            if (self.state() === 'size') {
+                                self.json = params.parent.json;
+                                return self.json.filter((item) => item.size === '7').length;
+                            }
+                            return self.products().filter((item) => item.size === '7').length;
+                        }),
+                        isSelected: ko.observable(false),
+                        key: 'size',
+                        name: 'XXM',
+                        value: '7'
+                    }
+                ]
+            }
         ]);
 
-        self.sizeArray = ko.observableArray([
-            { propLabel: 'XS', checkBoxValue: { propType: 'size', value: '3' }},
-            { propLabel: 'SM', checkBoxValue: { propType: 'size', value: '4' }},
-            { propLabel: 'MD', checkBoxValue: { propType: 'size', value: '5' }},
-            { propLabel: 'LG', checkBoxValue: { propType: 'size', value: '6' }},
-            { propLabel: 'XL', checkBoxValue: { propType: 'size', value: '7' }}
-        ]);
+        self.eventHendler = (event) => {
 
-        self.selectedOptions.subscribe((newValue) => {
-            const sorted = newValue.sort((prop1, prop2) => prop1['propType'] > prop2['propType'] ? 1 : -1);
-            self.json = params.parent.json;
-            self.filteredProductsByColor([]);
-            self.filteredProductsBySize([]);
+            self.setSelectedState(event);
+            self.filtering();
+            
+            self.setFilterState();
+            self.f1();
+        };
 
-            sorted.forEach(item => {
-                if (item.propType === 'color') {
-                    self.json.forEach(elem => {
-                        if (elem.color === item.value) self.filteredProductsByColor.push(elem);
-                    });
-                }
+        self.setSelectedState = (checkBox) => {
+            checkBox.isSelected() ? checkBox.isSelected(false) : checkBox.isSelected(true);
+        };
 
-                if (item.propType === 'size') {
-                    self.json.forEach(elem => {
-                        if (elem.size === item.value) self.filteredProductsBySize.push(elem);
-                    });
+        self.setFilterState = () => {
+            let state = null;
+
+            self.filters().forEach(item => {
+                item.options.forEach(element => {
+                    if (element.isSelected() && self.testArray().length === 1) {
+                        state = element['key'];
+                    }
+                });
+            });
+
+            self.state(state);
+        };
+
+        self.filtering = () => {
+            const array = [];
+            const json = params.parent.json;
+            const obj = {};
+
+            self.filters().forEach(item => {
+                const label = item['label'].toLowerCase();
+
+                obj[label] = [];
+                item.options.forEach(element => {
+                    obj[label].push(json
+                        .filter(productItems => element.isSelected() && productItems[label] === element.value));
+                });
+                obj[label] = obj[label].flat(Infinity);
+            });
+
+            Object.keys(obj).forEach(element => {
+                if (obj[element].length) {
+                    array.push(obj[element]);
                 }
             });
 
-            self.filtering(self.filteredProductsByColor, self.filteredProductsBySize);
-        });
-
-        self.filtering = (filteredProductsByColor, filteredProductsBySize) => {
-            self.currentPage(1);
-            
-            if (_.size(filteredProductsByColor()) === 0 && _.size(filteredProductsBySize()) === 0) {
-                self.products(params.parent.json.map(el => el))
-            } 
-            
-            if (_.size(filteredProductsByColor()) !== 0 &&  _.size(filteredProductsBySize()) === 0) {
-                self.products(filteredProductsByColor());
-            } 
-            
-            if (_.size(filteredProductsByColor()) === 0 && _.size(filteredProductsBySize()) !== 0) {
-                self.products(self.filteredProductsBySize());
-            } 
-            
-            if (_.size(filteredProductsByColor()) !== 0 && _.size(filteredProductsBySize()) !== 0) {
-                self.products(_.intersection(filteredProductsByColor(), filteredProductsBySize()));
+            if (!array.length) {
+                self.json = params.parent.json;
+                self.products(self.json);
+            } else if (array.length === 1) {
+                self.products(array[0]);
+            } else {
+                self.products(_.intersection(array[0], array[1]));
             }
+
+            self.testArray(array);
+        };
+
+        self.f1 = () => {
+            self.filters().forEach(item => {
+                item.options.forEach(element => {
+                    if (element.isSelected() && element.count() === 0) {
+                        element.isSelected(false);
+                        self.filtering();
+                        return;
+                    }
+                });
+            });
         };
     };
 });
