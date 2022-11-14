@@ -176,12 +176,10 @@ define([
         ]);
 
         self.eventHendler = (event) => {
-
             self.setSelectedState(event);
             self.filtering();
-            
             self.setFilterState();
-            self.f1();
+            self.removFilterWithoutProducts();
         };
 
         self.setSelectedState = (checkBox) => {
@@ -236,7 +234,7 @@ define([
             self.testArray(array);
         };
 
-        self.f1 = () => {
+        self.removFilterWithoutProducts = () => {
             self.filters().forEach(item => {
                 item.options.forEach(element => {
                     if (element.isSelected() && element.count() === 0) {
